@@ -17,4 +17,11 @@ export default {
 
 <style>
 @import url('./css/reset.css');
+.content{
+  position: fixed;
+  top: 40px;
+  bottom: 50px;
+  overflow: auto;
+  width: 100%;
+}
 </style>
