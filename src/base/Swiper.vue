@@ -1,25 +1,37 @@
 <template>
   <swiper :options="swiperOption">
-    <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">I'm Slide {{ slide }}</swiper-slide>
-    <div class="swiper-pagination" slot="pagination"></div>
+    <swiper-slide v-for="(slide, index) in swiperSlides"
+                  :key="index">
+      <img :src="slide">
+    </swiper-slide>
+    <div class="swiper-pagination"
+         slot="pagination"></div>
   </swiper>
 </template>
 
 <script>
   export default {
     name: 'carrousel',
+    props:['swiperSlides'],
     data() {
       return {
         swiperOption: {
           pagination: {
-            el: '.swiper-pagination'
+          el: '.swiper-pagination',
+
           },
-          autoplay:3500,
+          autoplay:{
+            delay:3500
+          },
           swiperWrapperSize:true,
-        
+          reverseDirection: true,
         },
-        swiperSlides: [1, 2, 3, 4, 5]
       }
     }
   }
 </script>
+<style>
+img {
+  width: 100%;
+}
+</style>
