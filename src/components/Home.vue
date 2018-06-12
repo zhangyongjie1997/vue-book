@@ -3,17 +3,16 @@
     <MHeader :back="true">首页</MHeader>
     <div class="content">
       <Swiper :swiperSlides="sliders"></Swiper>
-        <div class="container">
-          <h2>热门图书</h2>
-          <div class="books">
-            <ul>
-              <li v-for="(hot,index) in hotBooks" :key="index">
-                <img :src="hot.bookCover">
-                <b>{{hot.bookName}}</b>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="container">
+        <h2>热门图书</h2>
+        <ul>
+          <li v-for="(hot,index) in hotBooks"
+              :key="index">
+            <img :src="hot.bookCover">
+            <b>{{hot.bookName}}</b>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -57,23 +56,27 @@ export default {
 </script>
 
 <style scoped lang="less">
-.container{
+.container {
   width: 90%;
   margin: 0 auto;
-  h2{
+  h2 {
     margin-bottom: 10px;
     text-align: center;
   }
-  .books{
+  ul {
     width: 100%;
-    ul{
-      display: flex;
-      flex-direction: row;
-      flex: 1;
-      flex-wrap: wrap;
-      li{
-      width: 33.333%;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    flex-wrap: wrap;
+    li {
+      img {
+        width: 100%;
       }
+      box-sizing: border-box;
+      margin-top: 5px;
+      width: 50%;
+      padding: 5px 0px;
     }
   }
 }

@@ -10,3 +10,13 @@ export let getSliders = () => {
 export let getHotBook = () => {
   return axios.get('/hot');
 };
+export let getBooks=()=>{     //获取所有图书
+  return axios.get('/book');
+};
+export let removeBook=(id)=>{
+  axios.delete(`/book?id=${id}`);  //删除返回空对象
+  //更新前台数据
+};
+export let findOneBook=(id)=>{
+  return axios.get(`/book?id=${id}`);
+};

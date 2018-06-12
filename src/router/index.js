@@ -16,6 +16,7 @@ export default new Router({
     {path:'/add',component:Add},
     {path:'/list',component:List},
     {path:'/collect',component:Collect},
-    {path:'/detail',component:Detail},
+    {path:'/detail/:bid',component:Detail,name:'detail'},   ///detail/xxx  =>  {bid:xxx},带参数就必须给路径起名字
+    {path:'*',redirect:'/home'},
   ]
 })

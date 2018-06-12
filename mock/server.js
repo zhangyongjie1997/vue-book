@@ -15,6 +15,9 @@ function read(callback) {
     }
   });
 }
+function write(data,callback){   //写入内容，更新图书列表
+  fs.writeFile(path.join(__dirname, "./", "book.json"),JSON.stringify(data),callback);
+}
 
 http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -22,19 +25,48 @@ http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.setHeader("X-Powered-By", ' 3.2.1')
   if (req.method == "OPTIONS") return res.end(); /*让options请求快速返回*/
-  let {
-    pathname,
-    query
-  } = url.parse(req.url);
+  let {pathname,query} = url.parse(req.url, true); //true把query(url参数)转化成对象   ?id=1
   if (pathname === '/sliders') {
     res.setHeader('Content-Type', 'apllication/json;charset=utf8');
     return res.end(JSON.stringify(sliders));
   }
   if (pathname === '/hot') {
     read(function (books) {
-      let hot = books.reverse().slice(0,6);
+      let hot = books.reverse().slice(0, 6);
       res.end(JSON.stringify(hot));
-     });
-     return;
+    });
+    return;
+  }
+  if (pathname === '/book') { //对图书的增删改查
+    let id = parseInt(query.id); //取出的是字符串
+    switch (req.method) { //?id=1
+      case 'GET':
+        if (id !== 'undefined') { //查询对应id的图书
+          read(function (books) {
+            let book = books.find(item=>item.bookId===id);
+            if(!book){book={}} //如果没取到就返回空对象
+            res.setHeader('Content-Type', 'apllication/json;charset=utf8');
+            res.end(JSON.stringify(book));
+          });
+        } else { //获取所有图书
+          read(function (books) {
+            res.setHeader('Content-Type', 'apllication/json;charset=utf8');
+            res.end(JSON.stringify(books.reverse()));
+          });
+        }
+        break;
+      case 'POST':
+        break;
+      case 'PUT':
+        break;
+      case 'DELETE':
+        read(function (books) {
+          books = books.filter(item => item.bookId !== id);
+          write(books,function(){
+            res.end(JSON.stringify({}));  //删除返回空对象
+          });
+        });
+        break;
+    }
   }
 }).listen(3000);

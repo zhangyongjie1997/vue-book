@@ -20,3 +20,5 @@ npm install less less-loader axios vuex bootstrap --save-dev
   - 2.在需要使用这个组件的父级中引用这个组件，并注册
   - 3.以标签的形式引入
 
+## 列表页图书操作
+- restful风格
