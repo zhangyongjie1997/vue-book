@@ -24,7 +24,7 @@
         </li>
         <li>
           <div class="form-group">
-            <button class="btn btn-success">确认</button>
+            <button class="btn btn-success" @click="update">确认</button>
           </div>
         </li>
       </ul>
@@ -34,36 +34,31 @@
 
 <script type="text/ecmascript-6">
 import MHeader from '../base/MHeader.vue';
-import {findOneBook} from '../api/index.js';
-export default {
-  watch:{
+import {findOneBook,updateBook} from '../api/index.js';
+export default {                       //修改图书时的put请求既要通过url传参也要通过请求体传参
+  watch:{                              //url传bookId，请求体传book对象
     $route(){
       this.getData();
     }
   },
   data() {
-    return {
-      book:{}
-    }
+    return {book:{}}
   },
-  created(){
-    this.getData();
-  },
-  components: {
-    MHeader
-  },
+  created(){this.getData();},
+  components: {MHeader},
   methods:{
+    async update(){        
+      updateBook(this.bid,this.book);
+      this.$router.push('/list');  //修改完成后回到列表
+    },
     async getData(){
-      this.book = await findOneBook(this.bid);
+      this.book = await findOneBook(this.bid); //await执行完之后才会执行后面的代码，也就是后台响应请求之后
       //如果返回了空对象，就返回列表页
       Object.keys(this.book).length!==0?void(0):this.$router.push('/list');
-
     }
   },
   computed:{
-    bid(){
-      return this.$route.params.bid;  //取出路径参数
-    }
+    bid(){return this.$route.params.bid;}  //取出路径参数
   }
 }
 </script>

@@ -8,11 +8,10 @@ import Collect from '../components/Collect.vue';
 import Detail from '../components/Detail.vue';
 
 Vue.use(Router)
-
 export default new Router({
   routes: [
-    {path:'/',component:Home},
-    {path:'/home',component:Home},
+    {path:'/',component:Home},  //路由元信息实现页面缓存  this.$route.meta.keepAlive
+    {path:'/home',component:Home,meta:{keepAlive:true}},
     {path:'/add',component:Add},
     {path:'/list',component:List},
     {path:'/collect',component:Collect},

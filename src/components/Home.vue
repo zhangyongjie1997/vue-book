@@ -1,26 +1,34 @@
 <template>
   <div>
+    <vue-loading class="load"
+                 v-if="loading"
+                 type="bars"
+                 color="#d9544e"
+                 :size="{ width: '50px', height: '50px' }"></vue-loading>
     <MHeader :back="true">首页</MHeader>
-    <div class="content">
-      <Swiper :swiperSlides="sliders"></Swiper>
-      <div class="container">
-        <h2>热门图书</h2>
-        <ul>
-          <li v-for="(hot,index) in hotBooks"
-              :key="index">
-            <img :src="hot.bookCover">
-            <b>{{hot.bookName}}</b>
-          </li>
-        </ul>
+    <template v-if="!loading">
+      <div class="content">
+        <Swiper :swiperSlides="sliders"></Swiper>
+        <div class="container">
+          <h3>热门图书</h3>
+          <ul>
+            <li v-for="(hot,index) in hotBooks"
+                :key="index">
+              <img :src="hot.bookCover">
+              <b>{{hot.bookName}}</b>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import vueLoading from 'vue-loading-template';
 import MHeader from '../base/MHeader.vue';
 import Swiper from '../base/Swiper.vue';
-import {getSliders,getHotBook} from '../api/index.js';  //对象解构赋值
+import {getAll} from '../api/index.js';  //对象解构赋值
 export default {
   // created(){
   //   //给得到的对象中的data起别名叫做sliders
@@ -31,35 +39,45 @@ export default {
   //  this.sliders = sliders;
   // },
   async created(){
-    this.getSlider(); //获取轮播图
-    this.getHot(); //获取热门图书  
+    this.getData();
+    // this.getSlider(); //获取轮播图
+    // this.getHot(); //获取热门图书  
   },
   methods:{
-    async getSlider(){
-      this.sliders = await getSliders();
-    },
-    async getHot(){
-       this.hotBooks=await getHotBook();
-    },
+    async getData(){
+      let [sliders,hotBooks] = await getAll();// [sliders,books]
+      this.sliders = sliders;
+      this.hotBooks = hotBooks;
+      let that = this;
+      // .... 轮播图和热门图书已经获取完成
+      this.loading = false;
+    }
   },
   data() {
     return {
       sliders:[],
-      hotBooks:[]
+      hotBooks:[],
+      loading:true
     }
   },
   components: {
     MHeader,
-    Swiper
+    Swiper,
+    vueLoading
   }
 }
 </script>
 
 <style scoped lang="less">
+.load {
+  position: fixed;
+  top: 45%;
+  left: 45%;
+}
 .container {
   width: 90%;
   margin: 0 auto;
-  h2 {
+  h3 {
     margin-bottom: 10px;
     text-align: center;
   }
