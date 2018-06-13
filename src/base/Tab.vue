@@ -30,6 +30,7 @@
 -->
 <style scoped lang="less">
 .footer{
+  z-index: 1000;
   border-top: 1px solid #ccc;
   position: fixed;
   left: 0;

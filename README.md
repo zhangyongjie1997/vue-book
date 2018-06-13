@@ -223,3 +223,29 @@ export default new Router({
 - 默认每次给5条，前端要告诉后台现在从第几条开始给
 - /page?offset=5
 - 后台返回的同时还要告诉前台是否还有更多的数据hasMore:ture/false
+
+##  coding split 代码分割
+- 在 Webpack 2 中，我们可以使用动态 import语法来定义代码分块点 (split point)
+>如果使用 Babel，需要添加 syntax-dynamic-import 插件，才能使 Babel 可以正确地解析语法。
+>如果使用vue-cli搭建项目会自带syntax-dynamic-import 插件，无需手动添加
+```js
+const Foo = () => import('./Foo.vue');  //动态的导入组件
+const router = new VueRouter({
+  routes: [
+    { path: '/foo', component: Foo }
+  ]
+});
+//简写成
+{ path: '/foo', component: () => import('./Foo.vue') }
+```
+- 这是旧的书写方式
+```js
+import Home from '../components/Home.vue';
+new Router({
+  routes: [
+    {path:'/',component:Home},  //路由元信息实现页面缓存  this.$route.meta.keepAlive
+    {path:'/home',component:Home,meta:{keepAlive:true}},
+    {path:'*',redirect:'/home'},
+  ]
+})
+```

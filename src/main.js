@@ -5,8 +5,17 @@ import App from './App';
 import router from './router';
 import 'swiper/dist/css/swiper.css';//引入轮播图css
 import 'bootstrap/dist/css/bootstrap.css';
+import VueLazyload from 'vue-lazyload';
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: 'http://img0.imgtn.bdimg.com/it/u=2401895806,821799314&fm=27&gp=0.jpg',
+  loading: 'http://a.hiphotos.baidu.com/zhidao/pic/item/b90e7bec54e736d1afec42129d504fc2d5626929.jpg',
+  attempt: 1
+});
 import VueAwesomeSwiper from 'vue-awesome-swiper';//导入轮播图插件
 Vue.use(VueAwesomeSwiper);//使用轮播图插件
+import VueScroller from 'vue-scroller';
+Vue.use(VueScroller);
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({

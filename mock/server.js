@@ -117,4 +117,16 @@ http.createServer((req, res) => {
         break;
     }
   }
+  fs.stat('.'+pathname,function (err,stats) {
+    if(err){
+      fs.createReadStream('index.html').pipe(res);
+    }else{
+      if(stats.isDirectory()){
+        let p = require('path').join('.'+pathname,'./index.html');
+        fs.createReadStream(p).pipe(res);
+      }else{
+        fs.createReadStream('.'+pathname).pipe(res);
+      }
+    }
+  });
 }).listen(3001);
