@@ -8,12 +8,9 @@ export default new Router({
       component: () => import ('../components/Home.vue')
     }, //路由元信息实现页面缓存  this.$route.meta.keepAlive
     {
-      path: '/home',
-      component: () => import ('../components/Home.vue'),
-      meta: {
-        keepAlive: true
-      }
-    },
+      path:'/home',
+      component:()=>import('../components/Home.vue'),
+      meta:{keepAlive:true,title:'首页'}},
     {
       path: '/add',
       component: () => import ('../components/Add.vue')
