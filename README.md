@@ -1,8 +1,9 @@
-# vue-book
+#  vue-book
 
-> A Vue.js project
+>## A Vue.js project
 
 
+![Alt text](/vue-book\src\assets\logo.png)
 
 ### 项目用到 less axios bootstrap.css
 
