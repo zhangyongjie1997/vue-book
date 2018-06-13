@@ -4,7 +4,6 @@ axios.interceptors.response.use((res) => {
   return res.data; //拦截器，返回原来的结果的data属性
 });
 // 获取轮播图数据 , 返回的是一个promise对象
-
 export let getSliders = () => {
   return axios.get('/sliders');
 }
@@ -23,20 +22,19 @@ export let findOneBook = (id) => {
 };
 //修改图书
 /**
- * 
  * @param {*} id  编号 
  * @param {*} data  图书对象，请求体发送
  */
 export let updateBook = (id, data) => {
-  return axios.put(`/book?id=${id}`,data);
+  return axios.put(`/book?id=${id}`, data);
 };
 //添加图书
-
-
 export let addBook = (data) => {
-  return axios.post("/book",data);
+  return axios.post("/book", data);
 };
-
-export let getAll = () =>{
-  return axios.all([getSliders(),getHotBook()]);
+export let getAll = () => {
+  return axios.all([getSliders(), getHotBook()]);
+};
+export let pagination = (offset) => {
+  return axios.get(`/page?offset=${offset}`);
 };

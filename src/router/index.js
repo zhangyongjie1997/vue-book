@@ -13,7 +13,7 @@ export default new Router({
     {path:'/',component:Home},  //路由元信息实现页面缓存  this.$route.meta.keepAlive
     {path:'/home',component:Home,meta:{keepAlive:true}},
     {path:'/add',component:Add},
-    {path:'/list',component:List},
+    {path:'/list',component:List,meta:{keepAlive:true}},
     {path:'/collect',component:Collect},
     {path:'/detail/:bid',component:Detail,name:'detail'},   ///detail/xxx  =>  {bid:xxx},带参数就必须给路径起名字
     {path:'*',redirect:'/home'},

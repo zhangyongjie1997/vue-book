@@ -3,7 +3,7 @@
 >## A Vue.js project
 
 
-![Alt text](/vue-book\src\assets\logo.png)
+![Alt text](https://github.com/zhangyongjie1997/vue-book/blob/master/src/assets/logo.png)
 
 ### 项目用到 less axios bootstrap.css
 
@@ -198,3 +198,28 @@ export default new Router({
       this.books = this.books.filter(item => item.bookId !== id);
     }
 ```
+## 加入路由动画
+`</transtion>`组件
+```html
+<transition name="fade">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </transition>
+    <!-- 不需要缓存的 -->
+    <transition name="fade">
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    </transition>
+```
+```css
+    .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+```
+## 下拉加载更多
+- 默认每次给5条，前端要告诉后台现在从第几条开始给
+- /page?offset=5
+- 后台返回的同时还要告诉前台是否还有更多的数据hasMore:ture/false

@@ -18,14 +18,28 @@ function read(callback) {
 function write(data,callback){   //写入内容，更新图书列表
   fs.writeFile(path.join(__dirname, "./", "book.json"),JSON.stringify(data),callback);
 }
-
 http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
   res.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
   res.setHeader("X-Powered-By", ' 3.2.1')
   if (req.method == "OPTIONS") return res.end(); /*让options请求快速返回*/
-  let {pathname,query} = url.parse(req.url, true); //true把query(url参数)转化成对象   ?id=1
+  
+  let {pathname,query} = url.parse(req.url, true); //true把query(url参数)转化成对象   ?id=1 => query{id:1}
+  
+  if(pathname === '/page'){
+    let pageSize = 5;       //每次返回5本书
+    let hasMore = true;
+    let offset = parseInt(query.offset) || 0;   //拿到前端传递的值
+    read(function(books){
+      let result = books.reverse().slice(offset,offset+pageSize);   //数据倒序,取出当前书本位置向后5本范围的书
+      if(books.length <= offset + pageSize){hasMore = false;}
+      res.setHeader('Content-Type', 'apllication/json;charset=utf8');
+      setTimeout(function(){res.end(JSON.stringify({hasMore,books:result}));},1500);
+    });
+    return;
+    
+  }
   if (pathname === '/sliders') {
     res.setHeader('Content-Type', 'apllication/json;charset=utf8');
     return res.end(JSON.stringify(sliders));
@@ -33,7 +47,7 @@ http.createServer((req, res) => {
   if (pathname === '/hot') {
     read(function (books) {
       let hot = books.reverse().slice(0, 6);
-      res.end(JSON.stringify(hot));
+      setTimeout(function(){res.end(JSON.stringify(hot));},1500);
     });
     return;
   }

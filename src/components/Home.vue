@@ -2,7 +2,7 @@
   <div>
     <vue-loading class="load"
                  v-if="loading"
-                 type="bars"
+                 type="spiningDubbles"
                  color="#d9544e"
                  :size="{ width: '50px', height: '50px' }"></vue-loading>
     <MHeader :back="true">首页</MHeader>
