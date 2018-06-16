@@ -18,9 +18,16 @@ import VueScroller from 'vue-scroller';
 Vue.use(VueScroller);
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
+router.beforeEach(function (to,from,next) {  //每一次在进入路由之前都会执行此方法,全局钩子，可以执行一些拦截
+  document.title = to.meta.title;
+  // if(....){
+  //   next(path:'....');
+  // }
+  next();//继续向下走，不写就不会向下走
+});
 new Vue({
   el: '#app',
   router,
   components: { App },
   template: '<App/>'
-})
+});

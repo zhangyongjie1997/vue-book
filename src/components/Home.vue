@@ -38,7 +38,7 @@ export default {
   //   });
   //  this.sliders = sliders;
   // },
-  async created(){
+  created(){
     this.getData();
     // this.getSlider(); //获取轮播图
     // this.getHot(); //获取热门图书  
